@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --gray-950: hsl(0, 0%, 5%);
+  --gray-900: hsl(0, 0%, 10%);
+  --gray-800: hsl(0, 0%, 20%);
+  --gray-700: hsl(0, 0%, 30%);
+  --gray-600: hsl(0, 0%, 40%);
+  --gray-500: hsl(0, 0%, 50%);
+  --gray-400: hsl(0, 0%, 60%);
+  --gray-300: hsl(0, 0%, 70%);
+  --gray-200: hsl(0, 0%, 80%);
+  --gray-100: hsl(0, 0%, 90%);
+  --gray-50: hsl(0, 0%, 95%);
+  --bg-gray-1: hsl(0, 0%, 98%);
+  --bg-gray-2: hsl(0, 0%, 94%);
+}
+
+.emoji {
+  font-family: 'Apple Color Emoji', 'Inter', system-ui, sans-serif;
+  font-size: 1.2em;
+}
+
+.header {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.03rem;
+  padding-left: 1.6rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: var(--gray-800);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'slnt' 0;
+}
+
+#root {
+  height: 100vh;
+}
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-box {
+  display: flex;
+  /* background-color: var(--bg-gray-1); */
+  border: 1px solid var(--gray-100);
+  padding: 20px;
+  justify-content: center;
+  border-radius: 0.5rem;
+  flex-direction: column;
+  flex-basis: 400px;
+  height: 200px;
+  box-shadow: 0px 0px 10px 5px var(--gray-50);
+}
+
+.login-box div {
+  align-self: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 1rem;
+}
+
+.login-box input {
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: 1px solid var(--gray-400);
+  border-radius: 1rem;
+}
+
+.chat-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 0;
+  flex-grow: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 0.5rem;
+}
+
+.msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 65%;
+  margin-top: 0.5rem;
+}
+
+.msg-text {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--bg-gray-2);
+}
+
+.msg-sender {
+  color: var(--gray-400);
+  font-weight: 300;
+  font-size: 0.9rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.1rem;
+}
+
+.chat-input {
+  display: flex;
+  height: 3rem;
+  padding: 0.5rem;
+  padding-bottom: 0;
+}
+
+.input {
+  display: flex;
+  flex-basis: 0;
+  flex-grow: 1;
+  align-items: center;
+  border: 1px solid var(--gray-400);
+  border-radius: 1rem;
+}
+
+textarea {
+  appearance: none; /* Removes platform-specific look */
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit; /* Inherit font from parent */
+  font-size: inherit; /* Inherit font size */
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+textarea.input-text {
+  display: flex;
+  max-width: 100%;
+  color: var(--gray-500);
+  flex-basis: 200px;
+  flex-grow: 1;
+  padding-left: 1rem;
+  border-radius: 0.5rem;
+}
+
+button {
+  appearance: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.send-button {
+  height: 2.2rem;
+  flex-basis: 2.2rem;
+  margin-right: 1rem;
+  border: 1px solid var(--gray-100);
+  background-color: var(--gray-100);
+  border-radius: 0.5rem;
+}
+
+.send-button:hover {
+  background-color: var(--gray-200);
+}
+
+.send-button:active {
+  background-color: var(--gray-300);
+}
+
+.footer {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  padding: 0.5rem;
+  align-self: center;
+}
+
+.footer a {
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer a:hover {
+  color: inherit;
+}
+
+.footer a:active {
+  color: inherit;
+}
+
+.footer a:visited {
+  color: inherit;
+}
