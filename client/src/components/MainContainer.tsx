@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ChatContainer from './ChatContainer';
 import LoginContainer from './LoginContainer';
 
 const Main: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [displayName, setDisplayName] = useState('');
+  const [isLoggedIn, _setIsLoggedIn] = useState(true);
 
   return (
     <div className='main-container'>{isLoggedIn ? <ChatContainer /> : <LoginContainer />}</div>

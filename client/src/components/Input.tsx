@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import InputText from './InputText';
+import { ChangeEvent } from 'react';
 
 const url = '/api/messages';
 
 const sendMessage = (text: string) => {
-  if (typeof text === 'string' && text.length > 0) {
+  if (text.length > 0) {
     const body = {
       message: text,
       sender: 'Olivia',
@@ -18,15 +19,19 @@ const sendMessage = (text: string) => {
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error: unknown) => {
+        console.error(error);
+      });
   }
 };
 
 const Input: React.FC = () => {
   const [content, setContent] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value);
   };
 

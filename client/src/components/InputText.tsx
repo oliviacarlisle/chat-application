@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { ChangeEvent } from 'react';
 
-const InputText: React.FC = ({ content, handleChange }) => {
-  const [state, setState] = '';
+interface InputTextProps {
+  content: string;
+  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+}
 
-  return (
-    <textarea
-      className='input-text'
-      placeholder='Type message here'
-      value={content} // Bind the state variable to the textarea's value
-      onChange={handleChange} // Handler for capturing changes
-      rows={1} // Number of visible text rows
-    />
-  );
-};
+const InputText: React.FC<InputTextProps> = ({ content, handleChange }) => (
+  <textarea
+    className='input-text'
+    placeholder='Type message here'
+    value={content}
+    onChange={handleChange}
+    rows={1}
+  />
+);
 
 export default InputText;

@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+interface MessageProps {
+  sender: string;
+  message: string;
+}
 
-const Message: React.FC = ({ sender, message }) => {
+const Message: React.FC<MessageProps> = ({ sender, message }) => {
   const self = 'Olivia' === sender;
 
   const msgStyle = {
