@@ -1,50 +1,44 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { updateMessage, clearMessage } from '../reducers/userReducer';
+import { loadOneNew } from '../reducers/messagesReducer';
+import { sendMessage } from '../api/async';
 import InputText from './InputText';
 import { ChangeEvent } from 'react';
 
-const url = '/api/messages';
-
-const sendMessage = (text: string) => {
-  if (text.length > 0) {
-    const body = {
-      message: text,
-      sender: 'Olivia',
-    };
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error: unknown) => {
-        console.error(error);
-      });
-  }
-};
-
 const Input: React.FC = () => {
-  const [content, setContent] = useState('');
+  const username = useSelector((state: RootState) => state.user.username);
+  const userMessage = useSelector((state: RootState) => state.user.userMessage);
+  const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value);
+    dispatch(updateMessage(event.target.value));
   };
 
   const handleClick = () => {
     console.log('button clicked');
-    console.log(content);
-    sendMessage(content);
-    setContent('');
+    console.log(`Username: ${username}`);
+    console.log(`message: ${userMessage}`);
+    console.log('sending message...');
+    sendMessage(username, userMessage)
+      .then((result) => {
+        if (!result) {
+          console.error('error sending message');
+        } else {
+          dispatch(loadOneNew(result));
+        }
+      })
+      .catch(() => {
+        console.error('error sending message');
+      });
+    // load one new
+    dispatch(clearMessage());
+    console.log('message sent from handleClick');
   };
 
   return (
     <div className='input'>
-      <InputText content={content} handleChange={handleChange} />
+      <InputText content={userMessage} handleChange={handleChange} />
       <button onClick={handleClick} className='send-button'></button>
     </div>
   );

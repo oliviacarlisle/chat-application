@@ -17,7 +17,7 @@ router.get('/messages', getMessages, (req, res): void => {
 
 router.post('/messages', postMessage, (req, res): void => {
   console.log('Received POST request at /api/messages');
-  res.json({ message: 'Request processed' });
+  res.json(res.locals.newMessage);
 });
 
 export default router;

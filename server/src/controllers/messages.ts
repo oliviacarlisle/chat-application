@@ -55,8 +55,18 @@ export const postMessage = (req: PostMessageRequest, res: Response, next: NextFu
   }
 
   Message.create({ sender, message })
-    .then((data) => {
-      console.log(data);
+    .then((newMessage) => {
+      console.log(newMessage);
+
+      const { sender, message, createdAt, _id } = newMessage;
+
+      res.locals.newMessage = {
+        sender,
+        message,
+        createdAt,
+        id: _id.toString(),
+      };
+
       next();
     })
     .catch((error: unknown) => {

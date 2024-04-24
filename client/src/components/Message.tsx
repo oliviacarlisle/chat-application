@@ -1,10 +1,11 @@
-interface MessageProps {
+interface MessageItemProps {
+  username: string;
   sender: string;
   message: string;
 }
 
-const Message: React.FC<MessageProps> = ({ sender, message }) => {
-  const self = 'Olivia' === sender;
+const MessageItem: React.FC<MessageItemProps> = ({ username, sender, message }) => {
+  const self = username === sender;
 
   const msgStyle = {
     alignSelf: self ? 'flex-end' : 'flex-start',
@@ -31,4 +32,4 @@ const Message: React.FC<MessageProps> = ({ sender, message }) => {
   );
 };
 
-export default Message;
+export default MessageItem;

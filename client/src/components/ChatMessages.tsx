@@ -1,58 +1,37 @@
-import { useState, useEffect, useRef } from 'react';
-import Message from './Message';
-
-interface Message {
-  sender: string;
-  message: string;
-  createdAt: string;
-  id: string;
-}
-
-const validateMessages = (input: Message[]): boolean => {
-  if (!Array.isArray(input)) return false;
-  return input.every(
-    (message) =>
-      typeof message === 'object' &&
-      typeof message.sender === 'string' &&
-      typeof message.message === 'string' &&
-      typeof message.createdAt === 'string' &&
-      typeof message.id === 'string',
-  );
-};
+import { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { scrollToBottom } from '../effects/visuals';
+import MessageItem from './Message';
+import { getMessages } from '../api/async';
+import { loadMessages } from '../reducers/messagesReducer';
 
 const ChatMessages: React.FC = () => {
-  const url = '/api/messages';
-  const [messages, setMessages] = useState<Message[]>([]);
-
+  const messages = useSelector((state: RootState) => state.messages.list);
+  const username = useSelector((state: RootState) => state.user.username);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Access scrollTop and scrollHeight of the container when the component is mounted
-    const container = containerRef.current;
+  const dispatch = useDispatch();
 
-    if (container) {
-      container.style.overflowY = 'hidden';
-      // scroll to bottom
-      container.scrollTop = container.scrollHeight;
-      container.style.overflowY = 'auto';
-    }
+  useEffect(() => {
+    scrollToBottom(containerRef);
   }, [messages]);
 
   useEffect(() => {
-    fetch(url)
-      .then((data) => data.json())
-      .then((list: Message[]) => {
-        if (!validateMessages(list)) {
-          throw new Error('Error retrieving messages');
+    getMessages()
+      .then((list) => {
+        if (list) {
+          dispatch(loadMessages(list));
         }
-        setMessages(list);
       })
       .catch(() => {
-        console.error('Error retrieving messages');
+        console.log('Error loading messages');
       });
   }, []);
 
-  const msgList = messages.map((m) => <Message key={m.id} sender={m.sender} message={m.message} />);
+  const msgList = messages.map((m) => (
+    <MessageItem key={m.id} username={username} sender={m.sender} message={m.message} />
+  ));
 
   return (
     <div ref={containerRef} className='chat-messages'>

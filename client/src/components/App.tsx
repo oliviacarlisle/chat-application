@@ -5,7 +5,8 @@ const App: React.FC = () => (
     <div className='header'>Messages</div>
     <MainContainer />
     <div className='footer'>
-      Made with ❤️ by <a href='https://github.com/oliviacarlisle'>Olivia Carlisle</a>
+      Made with <span className='emoji'>❤️</span> by{' '}
+      <a href='https://github.com/oliviacarlisle'>Olivia Carlisle</a>
     </div>
   </div>
 );
