@@ -3,6 +3,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'node:path';
 import apiRouter from './routes/api.js';
+import http from 'node:http';
+import { WebSocketServer } from 'ws';
 
 // Import types
 import type { Request, Response, NextFunction } from 'express';
@@ -53,7 +55,54 @@ app.use((err: ExpressError, req: Request, res: Response, _next: NextFunction): v
   res.status(errObj.status).json({ err: errObj.message });
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port ${port.toString()}`);
+// Create the HTTP server with Express
+const server = http.createServer(app);
+
+// Start the server
+server.listen(port, () => {
+  console.log(`Express server listening on port ${port.toString()}`);
+});
+
+// app.listen(port, () => {
+//   // eslint-disable-next-line no-console
+//   console.log(`Listening on port ${port.toString()}`);
+// });
+
+const wss = new WebSocketServer({ server });
+
+wss.on('listening', () => {
+  console.log('websocket server listening');
+});
+
+wss.on('connection', (ws) => {
+  console.log('New WebSocket connection');
+
+  // Set up event listeners for the WebSocket
+  ws.on('message', (message) => {
+    try {
+      // Convert the received message to a string (if it's a buffer)
+      const messageStr = message.toString();
+
+      // Parse the string to JSON
+      const jsonData = JSON.parse(messageStr);
+
+      console.log('Received JSON:', jsonData);
+
+      // Respond with a modified message
+      const response = {
+        reply: `Hello, ${jsonData.message}`,
+        receivedAt: new Date().toISOString(),
+      };
+
+      ws.send(JSON.stringify(response));
+    } catch (error) {
+      console.error('Error parsing message:', error);
+
+      // Send an error response
+      ws.send(JSON.stringify({ error: 'Invalid message format' }));
+    }
+  });
+
+  // Optionally send a welcome message when a new client connects
+  ws.send(JSON.stringify({ message: 'Welcome to the WebSocket server' }));
 });
