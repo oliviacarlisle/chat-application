@@ -1,5 +1,5 @@
 import express from 'express';
-import { getMessages, postMessage } from '../controllers/messages.js';
+import { getMessages, postMessage, broadcastMessage } from '../controllers/messages.js';
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/messages', getMessages, (req, res): void => {
   res.json(res.locals.messages);
 });
 
-router.post('/messages', postMessage, (req, res): void => {
+router.post('/messages', postMessage, broadcastMessage, (req, res): void => {
   console.log('Received POST request at /api/messages');
   res.json(res.locals.newMessage);
 });

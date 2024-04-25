@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "start": "node server/dist/server.js",
     "server": "nodemon server/dist/server.js",
     "client": "NODE_ENV=development webpack serve --config client/webpack.config.js --open",
     "build:client": "NODE_ENV=production webpack --config client/webpack.config.js",

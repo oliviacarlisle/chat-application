@@ -68,7 +68,11 @@ server.listen(port, () => {
 //   console.log(`Listening on port ${port.toString()}`);
 // });
 
-const wss = new WebSocketServer({ server });
+function heartbeat() {
+  this.isAlive = true;
+}
+
+export const wss = new WebSocketServer({ server });
 
 wss.on('listening', () => {
   console.log('websocket server listening');
@@ -76,6 +80,10 @@ wss.on('listening', () => {
 
 wss.on('connection', (ws) => {
   console.log('New WebSocket connection');
+  ws.isAlive = true;
+  ws.on('pong', heartbeat);
+
+  ws.on('error', console.error);
 
   // Set up event listeners for the WebSocket
   ws.on('message', (message) => {
@@ -88,21 +96,34 @@ wss.on('connection', (ws) => {
 
       console.log('Received JSON:', jsonData);
 
-      // Respond with a modified message
-      const response = {
-        reply: `Hello, ${jsonData.message}`,
-        receivedAt: new Date().toISOString(),
-      };
+      // // Respond with a modified message
+      // const response = {
+      //   reply: `Hello, ${jsonData.message}`,
+      //   receivedAt: new Date().toISOString(),
+      // };
 
-      ws.send(JSON.stringify(response));
+      ws.send(JSON.stringify({ type: 'log', payload: 'Received' }));
     } catch (error) {
       console.error('Error parsing message:', error);
 
       // Send an error response
-      ws.send(JSON.stringify({ error: 'Invalid message format' }));
+      ws.send(JSON.stringify({ type: 'error', payload: 'Invalid message format' }));
     }
   });
 
   // Optionally send a welcome message when a new client connects
-  ws.send(JSON.stringify({ message: 'Welcome to the WebSocket server' }));
+  ws.send(JSON.stringify({ type: 'log', payload: 'Success' }));
+});
+
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, 10000);
+
+wss.on('close', function close() {
+  clearInterval(interval);
 });

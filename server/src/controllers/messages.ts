@@ -1,4 +1,5 @@
 import Message from '../models/messagesModel.js';
+import { broadcast } from '../wss.js';
 import type { Request, Response, NextFunction } from 'express';
 import type { ExpressError } from '../types/errors.js';
 
@@ -79,4 +80,15 @@ export const postMessage = (req: PostMessageRequest, res: Response, next: NextFu
       };
       next(err);
     });
+};
+
+export const broadcastMessage = (
+  req: PostMessageRequest,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const newMessage = res.locals.newMessage;
+
+  broadcast(newMessage);
+  next();
 };
