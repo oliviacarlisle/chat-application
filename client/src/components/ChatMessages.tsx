@@ -35,6 +35,7 @@ const ChatMessages: React.FC = () => {
 
   return (
     <div ref={containerRef} className='chat-messages'>
+      {/* <div className='blank-space'></div> */}
       {msgList}
     </div>
   );

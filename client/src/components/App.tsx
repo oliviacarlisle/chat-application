@@ -2,7 +2,8 @@ import MainContainer from './MainContainer';
 
 const App: React.FC = () => (
   <div className='outer-container'>
-    <div className='header'>Messages</div>
+    <h1 className='header-h1'>Messages</h1>
+    <div className='header'></div>
     <MainContainer />
     <div className='footer'>
       Made with <span className='emoji'>❤️</span> by{' '}

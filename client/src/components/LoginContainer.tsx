@@ -1,8 +1,13 @@
-const LoginContainer: React.FC = () => (
+const LoginContainer: React.FC = ({ username, handleChange, submitUsername }) => (
   <div className='login-container'>
     <div className='login-box'>
-      <div>Welcome</div>
-      <input placeholder='Display name'></input>
+      <div>Start messaging now.</div>
+      <input placeholder='Display name' value={username} onChange={handleChange} />
+      <div>
+        <button className='display-name' onClick={submitUsername}>
+          Proceed
+        </button>
+      </div>
     </div>
   </div>
 );

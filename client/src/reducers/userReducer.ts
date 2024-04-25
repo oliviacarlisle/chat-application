@@ -18,9 +18,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      if (typeof action.payload === 'string') {
-        state.username = action.payload;
+    login: (state) => {
+      if (state.username.length > 0) {
         state.isLoggedIn = true;
       }
     },
@@ -32,9 +31,14 @@ export const userSlice = createSlice({
     clearMessage: (state) => {
       state.userMessage = '';
     },
+    updateUsername: (state, action: PayloadAction<string>) => {
+      if (typeof action.payload === 'string') {
+        state.username = action.payload;
+      }
+    },
   },
 });
 
-export const { login, updateMessage, clearMessage } = userSlice.actions;
+export const { login, updateMessage, clearMessage, updateUsername } = userSlice.actions;
 
 export default userSlice.reducer;
