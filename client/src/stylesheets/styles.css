@@ -21,6 +21,11 @@
   font-size: 1.2em;
 }
 
+.xl-emoji {
+  font-family: 'Apple Color Emoji', 'Inter', system-ui, sans-serif;
+  font-size: 3em;
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -154,6 +159,10 @@ button.display-name:active {
   flex-direction: column;
   max-width: 65%;
   margin-top: 0.5rem;
+}
+
+.msg-text-wrapper {
+  display: flex;
 }
 
 .msg-text {

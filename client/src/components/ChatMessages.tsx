@@ -29,9 +29,21 @@ const ChatMessages: React.FC = () => {
       });
   }, []);
 
-  const msgList = messages.map((m) => (
-    <MessageItem key={m.id} username={username} sender={m.sender} message={m.message} />
-  ));
+  let previousMsg = null;
+  const msgList = messages.map((m, idx) => {
+    if (idx > 0) previousMsg = messages[idx - 1];
+
+    return (
+      <MessageItem
+        key={m.id}
+        username={username}
+        sender={m.sender}
+        message={m.message}
+        id={m.id}
+        previousMsg={previousMsg}
+      />
+    );
+  });
 
   return (
     <div ref={containerRef} className='chat-messages'>
